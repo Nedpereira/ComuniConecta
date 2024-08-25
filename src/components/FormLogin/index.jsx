@@ -10,16 +10,24 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { FaRegUser } from "react-icons/fa";
 import { cores } from "../../styles/cores";
 import { Form } from "./Form";
+import { getEmailPrefix } from "../../Utils";
+import { useAuthStatus } from "../../hooks/useAuthStatus";
 
 export const FormLogin = () => {
-  const firstFieldRef = React.useRef(null);
+  const { user } = useAuthStatus();
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const firstFieldRef = React.useRef(null);
+  const emailPrefix = getEmailPrefix(user?.email);
 
-  const [nome, setNome] = useState("Neder");
+  const handleOpen = () => {
+    if (!user) {
+      onOpen();
+    }
+  };
 
   return (
     <Flex>
@@ -29,13 +37,14 @@ export const FormLogin = () => {
         color={cores.white}
         fontSize="16px"
         mr={2}
+        textTransform="capitalize"
       >
-        {nome}
+        {emailPrefix}
       </Text>
       <Popover
         isOpen={isOpen}
         initialFocusRef={firstFieldRef}
-        onOpen={onOpen}
+        onOpen={handleOpen}
         onClose={onClose}
         placement="auto-end"
         closeOnBlur={false}
@@ -49,7 +58,7 @@ export const FormLogin = () => {
               <FaRegUser
                 color={cores.white}
                 cursor="pointer"
-                onClick={onOpen}
+                onClick={handleOpen}
                 size={22}
               />
             }

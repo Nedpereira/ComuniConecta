@@ -11,20 +11,46 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { cores } from "../../../styles/cores";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useCustomSnackbar } from "../../../hooks/useNotification";
 
 export const Form = ({ firstFieldRef, onCancel }) => {
+  const notificacao = useCustomSnackbar();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
+
+  const handleLogin = async () => {
+    const auth = getAuth();
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      notificacao("Bem-vindo(a) ao ComuniConeta!", "success");
+    } catch {
+      notificacao(
+        "Não foi possível conectar. Verifique suas credenciais e tente novamente.",
+        "error"
+      );
+    } finally {
+      setIsLoading(false);
+      onCancel();
+    }
+  };
 
   return (
     <Stack spacing={4}>
       <Stack>
         <FormLabel>E-mail</FormLabel>
         <Input
+          ref={firstFieldRef}
           sx={{ _placeholder: { color: cores.placeholder } }}
           placeholder="Digite seu e-mail"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Stack>
 
@@ -35,6 +61,8 @@ export const Form = ({ firstFieldRef, onCancel }) => {
             sx={{ _placeholder: { color: cores.placeholder } }}
             type={showPassword ? "text" : "password"}
             placeholder="Digite sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="3rem">
             <IconButton
@@ -79,12 +107,9 @@ export const Form = ({ firstFieldRef, onCancel }) => {
           Cancel
         </Button>
         <Button
-          sx={{
-            _hover: {
-              bg: cores.amarelo,
-            },
-          }}
+          isLoading={isLoading}
           bgColor={cores.amarelo}
+          onClick={handleLogin}
         >
           Entrar
         </Button>
