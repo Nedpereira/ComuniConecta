@@ -3,8 +3,7 @@ import imagemApresentacao from "../../assets/comunidade.png";
 import { cores } from "../../styles/cores";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
-export const Apresentacao = () => {
-
+export const Presentation = () => {
   const isMobile = useIsMobile();
 
   return (
