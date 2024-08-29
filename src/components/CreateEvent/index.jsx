@@ -24,7 +24,7 @@ import { IoMdAdd } from "react-icons/io";
 import { cores } from "../../styles/cores";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { db } from "../../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useCustomSnackbar } from "../../hooks/useNotification";
 
 export const CreateEvent = ({ onEventCreated }) => {
@@ -42,33 +42,50 @@ export const CreateEvent = ({ onEventCreated }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    if (titulo && data && categoria && gratuito && local) {
-      try {
-        await addDoc(collection(db, "events"), {
-          titulo,
-          descricao,
-          data,
-          categoria,
-          local,
-          gratuito,
-          valor: gratuito ? 0 : valor,
-        });
-        onClose();
-        onEventCreated();
-      } catch (error) {
-        notificacao("Erro ao adicionar evento", "error");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      onClose();
-      notificacao("Por favor, preencha todos os campos obrigatórios!", "info");
-      setLoading(false);
-    }
+  const eventLimit = 5;
+
+  const checkEventLimit = async () => {
+    const eventsRef = collection(db, "events");
+    const q = query(eventsRef);
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.size >= eventLimit;
   };
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    const eventOverLimit = await checkEventLimit();
+    if (eventOverLimit) {
+      notificacao("Limite de 5 eventos alcançado. Não é possível criar mais eventos.", "error");
+      setLoading(false);
+      onClose();
+    } else {
+      if (titulo && data && categoria && local) {
+        try {
+          await addDoc(collection(db, "events"), {
+            titulo,
+            descricao,
+            data,
+            categoria,
+            local,
+            gratuito,
+            valor: gratuito ? 0 : valor,
+          });
+          onEventCreated();
+          notificacao("Evento adicionado com sucesso!", "success");
+          onClose();
+        } catch (error) {
+          notificacao("Erro ao adicionar evento", "error");
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        notificacao("Por favor, preencha todos os campos obrigatórios!", "info");
+        setLoading(false);
+        onClose();
+      }
+    }
+  };
+  
   return (
     <>
       <ButtonGroup
