@@ -14,6 +14,7 @@ export const Presentation = () => {
           src={imagemApresentacao}
           objectFit="contain"
           alt="logo comuniconecta"
+          loading="lazy"
         />
         <Flex flexDirection={"column"}>
           <Spacer px={2} maxW={380} textAlign={isMobile ? "center" : "left"}>
