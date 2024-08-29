@@ -51,7 +51,7 @@ export const LogOut = () => {
               Você tem certeza que deseja sair?
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button color={cores.amarelo} ref={cancelRef} onClick={onClose}>
+              <Button bg={"transparent"} ref={cancelRef} onClick={onClose}>
                 Cancelar
               </Button>
               <Button bg={cores.amarelo} onClick={handleLogout} ml={3}>
