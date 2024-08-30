@@ -156,6 +156,11 @@ export const CreateEvent = ({ onEventCreated }) => {
                 onChange={(e) => setData(e.target.value)}
                 sx={{ _placeholder: { color: cores.placeholder } }}
                 color={cores.white}
+                css={{
+                  '::-webkit-calendar-picker-indicator': {
+                    filter: 'invert(1)',
+                  },
+                }}
               />
             </FormControl>
             <FormControl isRequired mt={4}>

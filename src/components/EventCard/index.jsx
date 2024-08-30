@@ -81,7 +81,7 @@ export const EventCard = ({ event }) => {
         </Text>
         <Spacer mx={2} />
         <Icon as={FaMoneyBillWave} color={cores.ciano} mr={2} />
-        <Text color={event.gratuito ? '#0cff15' : '#e98c8b'} isTruncated>
+        <Text color={event.gratuito ? "#0cff15" : "#e98c8b"} isTruncated>
           {event.gratuito ? "Gratuito" : `Pago - R$${event.valor}`}
         </Text>
       </Flex>
@@ -91,7 +91,7 @@ export const EventCard = ({ event }) => {
           mt={6}
           sx={{
             _hover: {
-              bg: "transparent",
+              bg: cores.verdeClaro,
             },
             _focus: {
               boxShadow: "none",
@@ -100,6 +100,8 @@ export const EventCard = ({ event }) => {
               bg: "transparent",
             },
           }}
+          variant="outline"
+          bg={"transparent"}
           size="sm"
           onClick={onOpen}
           color={cores.white}
