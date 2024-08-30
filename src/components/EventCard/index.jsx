@@ -81,11 +81,10 @@ export const EventCard = ({ event }) => {
         </Text>
         <Spacer mx={2} />
         <Icon as={FaMoneyBillWave} color={cores.ciano} mr={2} />
-        <Text color={event.gratuito ? "#0cff15" : "#e98c8b"} isTruncated>
+        <Text color={event.gratuito ? "#8cda8f" : "#fda8bf"} isTruncated>
           {event.gratuito ? "Gratuito" : `Pago - R$${event.valor}`}
         </Text>
       </Flex>
-
       {event?.descricao && (
         <Button
           mt={6}
@@ -111,6 +110,7 @@ export const EventCard = ({ event }) => {
       )}
 
       <Modal
+        isCentered
         scrollBehavior="inside"
         isOpen={isOpen}
         onClose={onClose}

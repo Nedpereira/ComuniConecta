@@ -244,6 +244,8 @@ export const CreateEvent = ({ onEventCreated }) => {
               size="sm"
               colorScheme="blue"
               onClick={handleSubmit}
+              bg={cores.amarelo}
+              color={cores.white}
             >
               Salvar
             </Button>
