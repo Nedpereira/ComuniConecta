@@ -23,7 +23,7 @@ import {
 import { IoMdAdd } from "react-icons/io";
 import { cores } from "../../styles/cores";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { db } from "../../firebase";
+import { db } from "../../Firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useCustomSnackbar } from "../../hooks/useNotification";
 

@@ -5,7 +5,7 @@ import { cores } from "../../styles/cores";
 import { Presentation } from "../../components/presentation";
 import { Header } from "../../components/header";
 import { EventCard } from "../../components/EventCard";
-import { db } from "../../firebase";
+import { db } from "../../Firebase";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
