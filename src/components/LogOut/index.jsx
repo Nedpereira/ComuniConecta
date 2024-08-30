@@ -38,6 +38,17 @@ export const LogOut = () => {
         variant="ghost"
         icon={<RiLogoutCircleRLine color={cores.white} size={22} />}
         onClick={onOpen}
+        sx={{
+          _hover: {
+            bg: cores.verde,
+          },
+          _focus: {
+            boxShadow: "none",
+          },
+          _active: {
+            bg: "transparent",
+          },
+        }}
       />
       <AlertDialog
         isOpen={isOpen}
@@ -51,10 +62,20 @@ export const LogOut = () => {
               Você tem certeza que deseja sair?
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button bg={"transparent"} color={cores.white} ref={cancelRef} onClick={onClose}>
+              <Button
+                bg={"transparent"}
+                color={cores.white}
+                ref={cancelRef}
+                onClick={onClose}
+              >
                 Cancelar
               </Button>
-              <Button bg={cores.amarelo} color={cores.white} onClick={handleLogout} ml={3}>
+              <Button
+                bg={cores.amarelo}
+                color={cores.white}
+                onClick={handleLogout}
+                ml={3}
+              >
                 Sair
               </Button>
             </AlertDialogFooter>
