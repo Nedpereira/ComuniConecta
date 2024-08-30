@@ -124,8 +124,8 @@ export const CreateEvent = ({ onEventCreated }) => {
         isOpen={isOpen}
       >
         <ModalOverlay />
-        <ModalContent bg={cores.verde} mx={4}>
-          <ModalHeader fontSize={16}>Cadastrar Novo Evento</ModalHeader>
+        <ModalContent bg={cores.verde} color={cores.white} mx={4}>
+          <ModalHeader color={cores.white} fontSize={16}>Cadastrar Novo Evento</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl isRequired>
@@ -134,6 +134,8 @@ export const CreateEvent = ({ onEventCreated }) => {
                 placeholder="Título do evento"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
+                sx={{ _placeholder: { color: cores.placeholder } }}
+                color={cores.white}
               />
             </FormControl>
             <FormControl mt={4}>
@@ -142,6 +144,8 @@ export const CreateEvent = ({ onEventCreated }) => {
                 placeholder="Descreva o evento"
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
+                sx={{ _placeholder: { color: cores.placeholder } }}
+                color={cores.white}
               />
             </FormControl>
             <FormControl isRequired mt={4}>
@@ -150,6 +154,8 @@ export const CreateEvent = ({ onEventCreated }) => {
                 type="datetime-local"
                 value={data}
                 onChange={(e) => setData(e.target.value)}
+                sx={{ _placeholder: { color: cores.placeholder } }}
+                color={cores.white}
               />
             </FormControl>
             <FormControl isRequired mt={4}>
@@ -193,28 +199,32 @@ export const CreateEvent = ({ onEventCreated }) => {
                 placeholder="Digite o endereço ou nome do local"
                 value={local}
                 onChange={(e) => setLocal(e.target.value)}
+                sx={{ _placeholder: { color: cores.placeholder } }}
+                color={cores.white}
               />
             </FormControl>
             <FormControl isRequired mt={4}>
-              <FormLabel>Evento Gratuito?</FormLabel>
+              <FormLabel color={cores.white}>Evento Gratuito?</FormLabel>
               <RadioGroup
                 defaultValue="free"
                 value={gratuito ? "free" : "paid"}
                 onChange={(e) => setGratuito(e === "free")}
               >
                 <Stack direction="row">
-                  <Radio value="free">Gratuito</Radio>
-                  <Radio value="paid">Pago</Radio>
+                  <Radio color={cores.white} value="free">Gratuito</Radio>
+                  <Radio color={cores.white} value="paid">Pago</Radio>
                 </Stack>
               </RadioGroup>
               {!gratuito && (
                 <FormControl mt={4}>
-                  <FormLabel>Valor do Ingresso</FormLabel>
+                  <FormLabel color={cores.white} >Valor do Ingresso</FormLabel>
                   <Input
                     type="number"
                     placeholder="Valor do ingresso"
                     value={valor}
                     onChange={(e) => setValor(Number(e.target.value))}
+                    sx={{ _placeholder: { color: cores.placeholder } }}
+                    color={cores.white}
                   />
                 </FormControl>
               )}

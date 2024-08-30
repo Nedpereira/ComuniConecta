@@ -57,7 +57,7 @@ export const EventCard = ({ event }) => {
       <Flex mt={2} align="center">
         <Icon as={IoMdCalendar} color={cores.ciano} mr={2} />
         <Tooltip label={formatData} hasArrow>
-          <Text color={cores.gray} isTruncated>
+          <Text color={cores.white} isTruncated>
             {formatData}
           </Text>
         </Tooltip>
@@ -67,7 +67,7 @@ export const EventCard = ({ event }) => {
         <Flex mt={2} justifyContent="flex-start" align="center">
           <Icon as={FaLocationArrow} color={cores.ciano} mr={2} />
           <Tooltip label={event.local} hasArrow>
-            <Text color={cores.gray} isTruncated>
+            <Text color={cores.white} isTruncated>
               {event.local}
             </Text>
           </Tooltip>
@@ -76,18 +76,34 @@ export const EventCard = ({ event }) => {
 
       <Flex mt={2} align="center">
         <Icon as={FaTag} color={cores.ciano} mr={2} />
-        <Text color={cores.gray} isTruncated>
+        <Text color={cores.white} isTruncated>
           {event.categoria}
         </Text>
         <Spacer mx={2} />
         <Icon as={FaMoneyBillWave} color={cores.ciano} mr={2} />
-        <Text color={event.gratuito ? cores.green : cores.red} isTruncated>
+        <Text color={event.gratuito ? '#0cff15' : '#e98c8b'} isTruncated>
           {event.gratuito ? "Gratuito" : `Pago - R$${event.valor}`}
         </Text>
       </Flex>
 
       {event?.descricao && (
-        <Button mt={6} size="sm" onClick={onOpen} color={cores.white}>
+        <Button
+          mt={6}
+          sx={{
+            _hover: {
+              bg: "transparent",
+            },
+            _focus: {
+              boxShadow: "none",
+            },
+            _active: {
+              bg: "transparent",
+            },
+          }}
+          size="sm"
+          onClick={onOpen}
+          color={cores.white}
+        >
           Ver Mais
         </Button>
       )}
@@ -99,7 +115,7 @@ export const EventCard = ({ event }) => {
         size="lg"
       >
         <ModalOverlay />
-        <ModalContent bg={cores.verde} mx={2}>
+        <ModalContent bg={cores.verde} color={cores.white} mx={2}>
           <ModalHeader mt={2}>{event.titulo}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
