@@ -55,7 +55,10 @@ export const CreateEvent = ({ onEventCreated }) => {
     setLoading(true);
     const eventOverLimit = await checkEventLimit();
     if (eventOverLimit) {
-      notificacao("Limite de 5 eventos alcançado. Não é possível criar mais eventos.", "error");
+      notificacao(
+        "Limite de 5 eventos alcançado. Não é possível criar mais eventos.",
+        "error"
+      );
       setLoading(false);
       onClose();
     } else {
@@ -77,15 +80,25 @@ export const CreateEvent = ({ onEventCreated }) => {
           notificacao("Erro ao adicionar evento", "error");
         } finally {
           setLoading(false);
+          setTitulo("");
+          setDescricao("");
+          setData("");
+          setCategoria("");
+          setLocal("");
+          setGratuito("");
+          setValor("");
         }
       } else {
-        notificacao("Por favor, preencha todos os campos obrigatórios!", "info");
+        notificacao(
+          "Por favor, preencha todos os campos obrigatórios!",
+          "info"
+        );
         setLoading(false);
         onClose();
       }
     }
   };
-  
+
   return (
     <>
       <ButtonGroup
@@ -125,7 +138,9 @@ export const CreateEvent = ({ onEventCreated }) => {
       >
         <ModalOverlay />
         <ModalContent bg={cores.verde} color={cores.white} mx={4}>
-          <ModalHeader color={cores.white} fontSize={16}>Cadastrar Novo Evento</ModalHeader>
+          <ModalHeader color={cores.white} fontSize={16}>
+            Cadastrar Novo Evento
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl isRequired>
@@ -157,8 +172,8 @@ export const CreateEvent = ({ onEventCreated }) => {
                 sx={{ _placeholder: { color: cores.placeholder } }}
                 color={cores.white}
                 css={{
-                  '::-webkit-calendar-picker-indicator': {
-                    filter: 'invert(1)',
+                  "::-webkit-calendar-picker-indicator": {
+                    filter: "invert(1)",
                   },
                 }}
               />
@@ -216,13 +231,17 @@ export const CreateEvent = ({ onEventCreated }) => {
                 onChange={(e) => setGratuito(e === "free")}
               >
                 <Stack direction="row">
-                  <Radio color={cores.white} value="free">Gratuito</Radio>
-                  <Radio color={cores.white} value="paid">Pago</Radio>
+                  <Radio color={cores.white} value="free">
+                    Gratuito
+                  </Radio>
+                  <Radio color={cores.white} value="paid">
+                    Pago
+                  </Radio>
                 </Stack>
               </RadioGroup>
               {!gratuito && (
                 <FormControl mt={4}>
-                  <FormLabel color={cores.white} >Valor do Ingresso</FormLabel>
+                  <FormLabel color={cores.white}>Valor do Ingresso</FormLabel>
                   <Input
                     type="number"
                     placeholder="Valor do ingresso"
