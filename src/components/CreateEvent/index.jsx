@@ -42,7 +42,7 @@ export const CreateEvent = ({ onEventCreated }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const eventLimit = 5;
+  const eventLimit = 10;
 
   const checkEventLimit = async () => {
     const eventsRef = collection(db, "events");
@@ -72,6 +72,7 @@ export const CreateEvent = ({ onEventCreated }) => {
             local,
             gratuito,
             valor: gratuito ? 0 : valor,
+            isFavorited: false,
           });
           onEventCreated();
           notificacao("Evento adicionado com sucesso!", "success");
@@ -85,8 +86,8 @@ export const CreateEvent = ({ onEventCreated }) => {
           setData("");
           setCategoria("");
           setLocal("");
-          setGratuito("");
-          setValor("");
+          setGratuito(true);
+          setValor(""); 
         }
       } else {
         notificacao(
@@ -98,6 +99,7 @@ export const CreateEvent = ({ onEventCreated }) => {
       }
     }
   };
+  
 
   return (
     <>

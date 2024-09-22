@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -15,20 +16,51 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IoMdCalendar } from "react-icons/io";
-import { FaLocationArrow } from "react-icons/fa6";
-import { FaTag, FaMoneyBillWave } from "react-icons/fa";
+import {
+  FaLocationArrow,
+  FaTag,
+  FaMoneyBillWave,
+  FaStar,
+  FaShareAlt,
+} from "react-icons/fa";
 import { cores } from "../../styles/cores";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import { useCustomSnackbar } from "../../hooks/useNotification";
 
-export const EventCard = ({ event }) => {
+export const EventCard = ({ event, onFavorite }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notificacao = useCustomSnackbar();
+  const [isFavorited, setIsFavorited] = useState(event.isFavorited || false);
 
   const formatData = format(
     new Date(event?.data),
     "dd 'de' MMMM 'de' yyyy, HH:mm",
     { locale: ptBR }
   );
+
+  const handleFavoriteClick = () => {
+    setIsFavorited(!isFavorited);
+    onFavorite(event.id, !isFavorited);
+  };
+
+  const handleShareClick = async () => {
+    const shareData = {
+      title: event.titulo,
+      text: `Confira este evento: ${event.titulo} no ${event.local} em ${formatData}`,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        notificacao("Erro ao compartilhar o evento:", "error");
+      }
+    } else {
+      notificacao("Compartilhamento não suportado neste dispositivo.", "info");
+    }
+  };
 
   return (
     <Box
@@ -40,19 +72,36 @@ export const EventCard = ({ event }) => {
       boxShadow="sm"
       mb={4}
       maxWidth="400px"
-      minHeight="220px"
+      minHeight="240px"
     >
-      <Tooltip label={event.titulo} hasArrow>
-        <Text
-          textTransform="capitalize"
-          fontSize="xl"
-          fontWeight="bold"
-          color={cores.dourado}
-          isTruncated
-        >
-          {event.titulo}
-        </Text>
-      </Tooltip>
+      <Flex justify="space-between" align="center">
+        <Tooltip label={event.titulo} hasArrow>
+          <Text
+            textTransform="capitalize"
+            fontSize="md"
+            fontWeight="bold"
+            color={cores.dourado}
+          >
+            {event.titulo}
+          </Text>
+        </Tooltip>
+        <Flex align="center">
+          <Icon
+            as={FaStar}
+            color={isFavorited ? "yellow" : "white"}
+            cursor="pointer"
+            mx={2}
+            onClick={handleFavoriteClick}
+          />
+          <Icon
+            as={FaShareAlt}
+            color="white"
+            cursor="pointer"
+            mx={2}
+            onClick={handleShareClick}
+          />
+        </Flex>
+      </Flex>
 
       <Flex mt={2} align="center">
         <Icon as={IoMdCalendar} color={cores.ciano} mr={2} />
