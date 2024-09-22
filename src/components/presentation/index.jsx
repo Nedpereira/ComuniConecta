@@ -10,7 +10,7 @@ export const Presentation = () => {
     <Flex justifyContent="center" alignItems="center" flexDirection="column">
       <Flex justifyContent="center" alignItems="center" flexWrap="wrap">
         <Image
-          boxSize="260px"
+          boxSize="240px"
           src={imagemApresentacao}
           objectFit="contain"
           alt="logo comuniconecta"
